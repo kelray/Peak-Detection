@@ -4,15 +4,15 @@
 #include <conio.h>
 #include <stdlib.h>
 #include <string.h>
-FILE * log;
+#define MAXSIZE 1024
 
-void ParseCSV2float(char *fileName, int column, float *outputArray, int *outputArraySize)
+void ParseCSV2float(char* fileName, int column, float* outputArray, int* outputArraySize)
 {
-	char *pch = NULL;
+	char* pch = NULL;
 	int i = 0;
 	int DelimCount = 0;
 	char Buffer[512];
-	FILE * file;
+	FILE* file;
 
 	file = fopen(fileName, "r+");
 	rewind(file);
@@ -42,7 +42,7 @@ void ParseCSV2float(char *fileName, int column, float *outputArray, int *outputA
 	fclose(file);
 }
 
-void PeakDetector(float *DataArray, unsigned int DataSize, unsigned int SampleSize, float threshold, float *PeakVal, int *index, int *NumOfPeaks)
+void PeakDetector(float* DataArray, unsigned int DataSize, unsigned int SampleSize, float threshold, float* PeakVal, int* index, int* NumOfPeaks)
 {
 	int counter = 0, StartIndex = 0;
 	int PeakIndex = 0;
@@ -94,17 +94,17 @@ void PeakDetector(float *DataArray, unsigned int DataSize, unsigned int SampleSi
 			if (max < threshold)
 			{
 				//printf("No peaks detected\n");
-				
+
 			}
 			//printf("----> max detected: %d\n", max);
 
 			//problem here with -ve numbers -> solved
 			//Solution: max must be reset to the value of the minimum element in the array 
 			//after each run through a window (of samples)
-			max = min;	
-					
+			max = min;
+
 			//check if counter reached the last element of the array
-			if (counter >= (DataSize-1))
+			if (counter >= (DataSize - 1))
 			{
 				break;
 			}
@@ -125,11 +125,11 @@ void main()
 	int counter = 0, StartIndex = 0;
 	int Peak2 = 0, PeakIndex = 0;
 	float fNumBuffer[315];
-	float *peaks = 0;
-	int *indeces = 0;
+	float* peaks = 0;
+	int* indeces = 0;
 
 	char AccFileName[] = "log-05Sep2019-13-05-16.csv";
-	
+
 	//The function returns peak values, index of each peak and total number of peaks
 	SampleSize = 10;
 	threshold = 0.5;
@@ -142,6 +142,5 @@ void main()
 	{
 		printf("Peak detected %f at index %d\n", peak[i], ind[i]);
 	}
-	_getch();
-	fclose(log);
+	getchar();
 }
